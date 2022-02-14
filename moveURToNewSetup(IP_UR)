@@ -1,0 +1,21 @@
+%% Move the UR robot to a New Application Setup Template using the RT interface (500 HZ)
+
+% Move the UR to a New Setup Template(500 HZ)
+% Use this function only as a template please do not override
+function [URScriptSocket]=moveURToNewSetup(IP_UR)
+Port=30003;%connnection to the realtime port
+URScriptSocket=tcpip(IP_UR,Port,'NetworkRole','client');% Connection with UR as server and matlab as client
+fopen(URScriptSocket);
+disp('sending..');
+% Please edit the URScript Command below according to the desired joint
+% angles for the New Setup
+% Note that the angles are in that order [Base, Shoulder, Elbow, Wrist1, Wrist2, Wrist3]
+% The positon is set by default to the upright home position 
+% v=0.6, is just the velocity and can be changed, but it is not recomended to
+% use really high speeds
+URScriptCommand='movej([0, -1.57, 0, -1.57, 0, 0],v=0.6)';
+fprintf(URScriptSocket, URScriptCommand);
+disp('URScript command was sent');
+disp('Arrived safely')
+fclose(URScriptSocket);
+end   
