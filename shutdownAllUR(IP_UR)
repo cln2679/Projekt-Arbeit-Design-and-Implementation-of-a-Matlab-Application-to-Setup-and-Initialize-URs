@@ -1,0 +1,14 @@
+%% Shutsdown UR robot and UR Controller
+
+function [DASHBOARD]=shutdownAllUR(IP_UR)
+port=29999; % Dashboard Server port
+DASHBOARD=tcpclient(IP_UR,port);% Connection with UR as server and matlab as client
+msg='shutdown';
+writeline(DASHBOARD,msg);
+data_1=readline(DASHBOARD);
+disp(data_1);
+pause(0.05);% Wait for the connection
+write(DASHBOARD, msg,"string");
+data=readline(DASHBOARD);
+disp(data);
+end
