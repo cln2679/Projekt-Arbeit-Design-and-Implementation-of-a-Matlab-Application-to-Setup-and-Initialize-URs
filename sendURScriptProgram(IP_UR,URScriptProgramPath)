@@ -1,0 +1,14 @@
+%% Sends a whole URScript program in Realtime (500 HZ)
+
+function [URScriptSocket] = sendURScriptProgram(IP_UR,URScriptProgramPath)
+% Sends a whole URScript program in Realtime (500 HZ)
+Port=30003;%connnection to the realtime port
+URScriptSocket=tcpip(IP_UR,Port,'NetworkRole','client');% Connection with UR as server and matlab as client
+URScriptSocket.OutputBufferSize=1140;
+fopen(URScriptSocket);
+disp('sending file...');
+file_as_char=fileread(URScriptProgramPath)
+fprintf(URScriptSocket,file_as_char);
+disp('successfully sent the file');
+fclose(URScriptSocket);
+end
